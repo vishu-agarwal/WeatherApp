@@ -46,7 +46,7 @@ class ViewController: UIViewController {
     
     @objc func searchfunc(){
         //here save data into userdefaults
-       // UserDefaults.standard.set(citytxt.text, forKey: "city")
+       UserDefaults.standard.set(citytxt.text, forKey: "city")
         let vc = Weathervc()
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         view.addSubview(myImg)
         view.addSubview(citytxt)
         //city name
-       // city = citytxt.text!
+       city = citytxt.text!
         // Do any additional setup after loading the view.
     }
 

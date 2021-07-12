@@ -30,7 +30,7 @@ class Weathervc: UIViewController {
      var icon = ""
  */
     
-    private var searching = false
+   // private var searching = false
 
     private let nametxt: UILabel = {
         let lbl = UILabel()
@@ -123,7 +123,7 @@ class Weathervc: UIViewController {
         return lbl
     }()
     
-    private let iconimg: UIImageView = {
+    /*private let iconimg: UIImageView = {
         
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
@@ -131,17 +131,17 @@ class Weathervc: UIViewController {
         img.clipsToBounds = true
         return img
     }()
-    
+    */
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "WEATHER"
-        //  citynamme = UserDefaults.standard.value(forKey: "city") as! String
+       
         view.backgroundColor = .white
-         //getData(name : citynamme)
+         getData(name : citynamme)
         view.addSubview(serachbar)
-        view.addSubview(iconimg)
+       // view.addSubview(iconimg)
          view.addSubview(nametxt)
          view.addSubview(cloudtxt)
         view.addSubview(countrytxt)
@@ -150,20 +150,21 @@ class Weathervc: UIViewController {
          view.addSubview(localtimetxt)
          view.addSubview(temptxt)
          view.addSubview(regiontxt)
-        serachbar.delegate = self
         
+        citynamme = UserDefaults.standard.value(forKey: "city") as! String
       
         getData(name : citynamme)
         
+        serachbar.delegate = self
+        
     }
     
-    private func getData(name: String)
-    {
+    func getData(name: String)
+    {print("function cal........")
         self.citynamme = name.replacingOccurrences(of: " ", with: " ")
         cityarray = ApiHandler.shared.searchCity(with: name)
         for i in cityarray
-        {
-            
+        {print(i.location.country)
             texttxt.text = i.current.condition.text
             nametxt.text = i.location.name
             countrytxt.text = i.location.country
@@ -171,11 +172,11 @@ class Weathervc: UIViewController {
             localtimetxt.text =  "Time : " + i.location.localtime
             regiontxt.text = i.location.region
             daytxt.text = "Day : " + String(i.current.id_day)
-            temptxt.text = "Temprature  : " + i.current.temp_c
-            var image = i.current.condition.icon
-            image = image.replacingOccurrences(of: "//cdn.weatherapi.com/", with: "")
-            iconimg.image = UIImage(named: image)
-            
+            temptxt.text = "Temprature  : " + String(i.current.temp_c)      
+           // var image = i.current.condition.icon
+          //  image = image.replacingOccurrences(of: "//cdn.weatherapi.com/", with: "")
+           // iconimg.image = UIImage(named: image)
+            print("function cal.1.......")
         }
     }
     
@@ -191,7 +192,7 @@ class Weathervc: UIViewController {
         texttxt.frame = CGRect(x: 20, y: cloudtxt.bottom + 10, width: view.width  - 40 , height: 40)
         daytxt.frame = CGRect(x: 20, y: texttxt.bottom + 10, width: view.width  - 40 , height: 40)
         localtimetxt.frame = CGRect(x: 20, y: daytxt.bottom + 10, width: view.width  - 40 , height: 40)
-        iconimg.frame = CGRect(x: 20, y: localtimetxt.bottom + 10, width: view.width  - 40 , height: 40)
+       // iconimg.frame = CGRect(x: 20, y: localtimetxt.bottom + 10, width: view.width  - 40 , height: 40)
         
         
     }
@@ -201,13 +202,11 @@ class Weathervc: UIViewController {
 
 extension Weathervc : UISearchBarDelegate{
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             view.endEditing(true)
-            
-            searching = true
-            getData(name:serachbar.text!)
-    
+        
+        //searching = true
+        print("searching.......................................")
+        getData(name:searchBar.text!)
     }
 }
